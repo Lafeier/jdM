@@ -1,0 +1,83 @@
+/* ===============reset css（重置样式）============= */
+*,
+*::before,
+*::after{
+	/*所有的标签，伪元素都选中*/
+	margin:0;
+	padding:0;
+	/* 移动端常用布局是流式布局 */
+	box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	/* 点击高亮效果的清除 */
+	tap-highlight-color:transparent;
+	-webkit-tap-highlight-color:transparent;
+}
+
+body{
+	font-family:"Microsoft YaHei","sans-serif";
+	font-size:14px;
+	color:#333;
+}
+
+a{
+	text-decoration:none;
+	color:#333;
+}
+
+ul,ol{
+	list-style:none;
+}
+
+input,textarea{
+	border:none;
+	outline:none;
+	/* 不允许改变大小 */
+	resize:none;
+	/* 去掉元素的外观 none：表示没有样式 */
+	-webkit-appearance:none;
+}
+
+
+
+/* ===============common css（公共样式）============ */
+.fl_left{
+	float:left;
+}
+
+.fl_right{
+	float:right;
+}
+
+.clearFix::before,
+.clearFix::after{
+	content:"";		/*内容为空*/
+	display:block;	/*用于占位*/
+	visibility:hidden;	/*占位后要隐藏*/
+	height:0;			/*内容高度为0*/
+	line-height:0;		/*行高为0*/
+	clear:both;		/*核心样式：清除浮动*/
+}
+
+.m_l10{
+	margin-left:10px;
+}
+
+.m_r10{
+	margin-right:10px;
+}
+
+.m_t10{
+	margin-top:10px;
+}
+
+.m_b10{
+	margin-bottom:10px;
+}
+
+/*使用精灵图的公共样式*/
+/*选中类名中开头是icon_以及包含 icon_的元素*/
+[class^="icon_"],[class*=" icon_"]{
+	background-image:url("../images/sprites.png");
+	background-repeat:no-repeat;
+	background-size:200px 200px;
+}

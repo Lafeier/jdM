@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>title</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+
+		.box{	
+			/*
+				如果不从边框计算起，那么在内容宽度为100%情况下，
+				再加上左右边框的40px，会超出浏览器的宽度
+			 */
+			width:100%;
+			height:1000px;
+			border:20px solid pink;
+			
+			/* 下面样式是为了防止内容溢出，不出现横向滚动条，提高用户体验 */
+			box-sizing:border-box;
+		}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+</body>
+</html>

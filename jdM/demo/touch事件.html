@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>touch</title>
+	<style>
+		body{
+			margin:0;
+			padding:0;
+		}
+
+		.box{
+			width:200px;
+			height:300px;
+			background:pink;
+			float:left;
+		}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+	<script>
+		window.onload=function(){
+			var box=document.querySelector(".box");
+			box.addEventListener("touchstart",function(e){
+				console.log("摸了");
+				console.log(e.touches[0].clientX,e.touches[0].clientY);
+				console.log(e.touches[0].pageX,e.touches[0].pageY);
+				console.log(e.touches[0].screenX,e.touches[0].screenY);
+			});
+
+			box.addEventListener("touchmove",function(e){
+				console.log("滑动了");
+				console.log(e);
+			});
+
+			box.addEventListener("touchend",function(e){
+				console.log("停止触摸了");
+				console.log(e);
+			});
+		}
+	</script>
+</body>
+</html>
+
+
+
+<!-- <script>
+var banner=function(){
+	/*1.自动轮播且无缝 定时器+过渡实现*/
+	/*2.点要随着图片的轮播而改变状态 根据索引实现*/
+	/*3.滑动效果 利用touch实现*/
+	/*4.滑动结束时 如果滑动的距离不超过屏幕距离的1/3，吸附回去 过渡实现*/
+	/*5.滑动结束时 如果滑动的距离超过1/3，切换（上一张、下一张） 根据滑动方向+过渡实现*/
+
+	/*轮播图容器*/
+	var banner=document.querySelector(".jd_banner");
+	/*屏幕宽度*/
+	var width=banner.offsetWidth;
+	/*图片容器*/
+	var imageBox=banner.querySelector("ul:first-child");
+	/*点容器*/
+	var pointBox=banner.querySelector("ul:last-child");
+	/*所有的点*/
+	var points=pointBox.querySelectorAll("li");
+
+
+	/*轮播图程序的核心 index*/
+	var index=1;	/*因为一开始就是显示第二张图片*/
+
+	var timer=setInterval(function(){
+		index++;	//每向左滑动一张图，索引加1
+		/*加过渡*/
+		imageBox.style.transition="all 0.2s";
+		imageBox.style.webkitTransition="all 0.2s";
+		/*做位移*/
+		imageBox.style.transform="translateX("+(-index*width)+"px)";
+		imageBox.style.webkitTransform="translateX("+(-index*width)+"px)";
+	},2000);
+
+	/*需要等最后一张图片结束时去判断，然后瞬间定位到第一张*/
+	imageBox.addEventListener("transitionend",function(){
+		//自动滚动的轮播
+		if(index>=9){
+			index=1;
+			/*瞬间定位*/
+			/*清过渡*/
+			imageBox.style.transition="none";
+			imageBox.style.webkitTransition="none";
+			/*做位移*/
+			imageBox.style.transform="translateX("+(-index*width)+"px)";
+			imageBox.style.webkitTransform="translateX("+(-index*width)+"px)";
+		}else if(index<=0){		//滑动的时候也需要无缝
+			index=8;
+			/*瞬间定位*/
+			/*清过渡*/
+			imageBox.style.transition="none";
+			imageBox.style.webkitTransition="none";
+			/*做位移*/
+			imageBox.style.transform="translateX("+(-index*width)+"px)";
+			imageBox.style.webkitTransform="translateX("+(-index*width)+"px)";
+		}
+	});
+
+
+};
+</script> -->

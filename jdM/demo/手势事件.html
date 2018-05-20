@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>touch</title>
+	<style>
+		body{
+			margin:0;
+			padding:0;
+		}
+
+		.box{
+			width:200px;
+			height:300px;
+			background:pink;
+			float:left;
+		}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+	<script>
+		window.onload=function(){
+			//1.理解移动端的手势事件
+			//2.swipe swipeLeft swipeRight swipeUp swipeDown
+			//3.左滑和右滑手势怎么实现
+			var bindSwipeEvent=function(dom,leftCallback,rightCallback){
+				/*手势的条件*/
+				//1.必须滑动过
+				//2.滑动的距离大于等于50px
+				
+				var isMove=false;	//设置一个开关
+				var startX=0;		//设置开始时的值
+				var distanceX=0;	//设置开始时的移动距离
+
+				dom.addEventListener("touchstart",function(e){
+					startX=e.touches[0].clientX;
+				});
+				dom.addEventListener("touchmove",function(e){
+					isMove=true;
+					var moveX=e.touches[0].clientX;
+					distanceX=moveX-startX;
+				});
+				dom.addEventListener("touchend",function(e){
+					if(isMove&&Math.abs(distanceX)>50){	//说明手指滑动了
+						if(distanceX>0){	//说明手指右滑
+							rightCallback&&rightCallback.call(this,e);	
+						}else{
+							leftCallback&&leftCallback.call(this,e);
+						}
+					}
+					//最好重置一下参数
+					isMove=false;	
+					startX=0;		
+					distanceX=0;
+				});
+			};
+
+			bindSwipeEvent(document.querySelector(".box"),function(e){
+				console.log(this);
+				console.log(e);
+				console.log("左滑手势");
+			},function(e){
+				console.log(this);
+				console.log(e);
+				console.log("右滑手势");
+			});
+		}
+	</script>
+</body>
+</html>

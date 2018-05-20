@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>tap事件</title>
+	<style>
+		body{
+			margin:0;
+			padding:0;
+		}
+
+		.box{
+			width:200px;
+			height:300px;
+			background:pink;
+			float:left;
+		}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+	<script src="../js/fastclick.min.js"></script>
+	<script>
+		// 当页面的dom元素加载完成
+		document.addEventListener("DOMContentLoaded",function(){
+			//初始化方法
+			FastClick.attach(document.body);
+		},false);
+
+		//正常使用click事件即可
+	</script>
+	<script>
+		// window.onload=function(){
+		// 	/*使用tap事件要达到以下要求*/
+		// 	//1.响应速度要比click快 150ms
+		// 	//2.不能滑动
+		// 	var bindTapEvent=function(dom,callback){
+		// 		//之所以这样写下面的代码，是为了我们理解事件的执行顺序
+		// 		//在谷歌浏览器模拟看不到300ms的效果
+		// 		//在真机上才能看到效果
+		// 		dom.addEventListener("touchstart",function(){
+		// 			console.log("touchstart");
+		// 		});
+		// 		dom.addEventListener("touchmove",function(){
+		// 			console.log("touchmove");
+		// 		});
+		// 		dom.addEventListener("touchend",function(){
+		// 			console.log("touchend");
+		// 		});
+		// 		dom.addEventListener("click",function(){
+		// 			console.log("click");
+		// 		});
+		// 	};
+
+		// 	bindTapEvent(document.querySelector(".box"),function(){});
+		// }
+
+
+		window.onload=function(){
+			/*使用tap事件要达到以下要求*/
+			//1.响应速度要比click快 150ms
+			//2.不能滑动
+			var bindTapEvent=function(dom,callback){
+				//之所以这样写下面的代码，是为了我们理解事件的执行顺序
+				//在谷歌浏览器模拟看不到300ms的效果
+				//在真机上才能看到效果
+				var startTime=0;
+				var isMove=false;	//设置一个开关
+				dom.addEventListener("touchstart",function(){
+					//拿到1970.1.1到现在的时间戳 new Date().getTime()
+					startTime=Date.now();		
+				});
+				dom.addEventListener("touchmove",function(){
+					isMove=true;	//如果发生touchmove事件，开关状态改变
+				});
+				dom.addEventListener("touchend",function(e){
+					//判断是否达到tap事件的两个要求
+					console.log(Date.now()-startTime);
+					if( (Date.now()-startTime)<150 && !isMove ){	//时间戳的单位本来就是ms
+						callback&&callback.call(this,e);	//达到则执行回调函数
+					}else{
+						console.log(111);
+					}
+
+					//每次执行后都重置参数
+					startTime=0;
+					isMove=false;
+
+				});
+				// dom.addEventListener("click",function(){
+				// 	console.log("click");
+				// });
+			};
+
+			bindTapEvent(document.querySelector(".box"),function(e){
+				console.log(this);
+				console.log(e);
+				console.log("tap事件");
+			});
+		}
+	</script>
+</body>
+</html>
